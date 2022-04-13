@@ -16,7 +16,7 @@
 <center>
     <h1>Product Management</h1>
     <h2>
-        <a href="/product?action=createProduct">Add New User</a>
+        <a href="/product?action=createProduct">Add New Product</a>
     </h2>
 </center>
 <div align="center">
@@ -31,17 +31,17 @@
             <th>Category</th>
             <th>Action</th>
         </tr>
-        <c:forEach var="listProduct" items="${listProduct}">
+        <c:forEach var="products" items="${products}">
             <tr>
-                <td><c:out value="${listProduct.id}"/></td>
-                <td><c:out value="${listProduct.name}"/></td>
-                <td><c:out value="${listProduct.price}"/></td>
-                <td><c:out value="${listProduct.quantity}"/></td>
-                <td><c:out value="${listProduct.color}"/></td>
-                <td><c:out value="${listProduct.category.id}"/></td>
+                <td><c:out value="${products.id}"/></td>
+                <td><c:out value="${products.name}"/></td>
+                <td><c:out value="${products.price}"/></td>
+                <td><c:out value="${products.quantity}"/></td>
+                <td><c:out value="${products.color}"/></td>
+                <td><c:out value="${products.category.id}"/></td>
                 <td>
-                    <a href="/product?action=editProduct&id=${listProduct.id}">Edit</a>
-                    <a href="/product?action=deleteProduct&id=${listProduct.id}">Delete</a>
+                    <a href="/product?action=editProduct&id=${products.id}">Edit</a>
+                    <a href="/product?action=deleteProduct&id=${products.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>

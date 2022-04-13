@@ -2,6 +2,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.ProductDAO;
+import model.Category;
 import model.Product;
 
 import javax.servlet.*;
@@ -31,6 +32,9 @@ public class ProductServlet extends HttpServlet {
                     break;
                 case "editProduct":
                     showEditProductForm(request,response);
+                    break;
+                case "deleteProduct":
+                    deleteProduct(request,response);
                     break;
                 default:
                     listProduct(request, response);
@@ -66,14 +70,15 @@ public class ProductServlet extends HttpServlet {
 
     private void listProduct(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        List<Product> listProduct = productDAO.findAll();
-        request.setAttribute("listProduct", listProduct);
+        List<Product> products = productDAO.findAll();
+        request.setAttribute("products", products);
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
         dispatcher.forward(request, response);
     }
 
     private void showCreateProductForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException{
+        request.setAttribute("categories", categoryDAO.findAll());
         RequestDispatcher dispatcher = request.getRequestDispatcher("product/create.jsp");
         dispatcher.forward(request, response);
     }
@@ -87,6 +92,16 @@ public class ProductServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    private void deleteProduct(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        productDAO.deleteProduct(id);
+        List<Product> listProduct = productDAO.findAll();
+        request.setAttribute("listProduct", listProduct);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("product/list.jsp");
+        dispatcher.forward(request, response);
+    }
+
     private void createProduct(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException{
         String name = request.getParameter("name");
@@ -95,7 +110,8 @@ public class ProductServlet extends HttpServlet {
         String color = request.getParameter("color");
         String description = request.getParameter("description");
         int id_category = Integer.parseInt(request.getParameter("id_category"));
-        Product newProduct = new Product(name,price,quantity,color,description,id_category);
+        Category category = categoryDAO.findById(id_category);
+        Product newProduct = new Product(name,price,quantity,color,description,id_category,category);
         productDAO.createProduct(newProduct);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/create.jsp");
         dispatcher.forward(request, response);
@@ -110,7 +126,8 @@ public class ProductServlet extends HttpServlet {
         String color = request.getParameter("color");
         String description = request.getParameter("description");
         int id_category = Integer.parseInt(request.getParameter("id_category"));
-        Product product = new Product(id,name,price,quantity,color,description,id_category);
+        Category category = categoryDAO.findById(id_category);
+        Product product = new Product(id,name,price,quantity,color,description,id_category,category);
         productDAO.update(product);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/edit.jsp");
         dispatcher.forward(request, response);

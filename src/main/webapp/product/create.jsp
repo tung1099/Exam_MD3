@@ -16,7 +16,7 @@
 <center>
     <h1>Product Management</h1>
     <h2>
-        <a href="/product">List All Users</a>
+        <a href="/product">List All Product</a>
     </h2>
 </center>
 <div align="center">
@@ -56,9 +56,13 @@
                 </td>
             </tr>
             <tr>
-                <th>ID Category:</th>
+                <th>Category:</th>
                 <td>
-                    <input type="text" name="id_category" id="id_category" size="15"/>
+                    <select name="categories" id="categories">
+                        <c:forEach var="categories" items="${categories}">
+                            <option value="${categories.id}">${categories.name}</option>
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
             <tr>

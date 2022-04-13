@@ -27,14 +27,14 @@
                     Edit Product
                 </h2>
             </caption>
-            <c:if test="${product != null}">
-                <input type="hidden" name="id" value="<c:out value='${product.id}' />"/>
+            <c:if test="${products != null}">
+                <input type="hidden" name="id" value="<c:out value='${products.id}' />"/>
             </c:if>
             <tr>
                 <th>Product Name:</th>
                 <td>
                     <input type="text" name="name" size="45"
-                           value="<c:out value='${product.name}' />"
+                           value="<c:out value='${products.name}' />"
                     />
                 </td>
             </tr>
@@ -42,7 +42,7 @@
                 <th>Price:</th>
                 <td>
                     <input type="text" name="price" size="45"
-                           value="<c:out value='${product.price}' />"
+                           value="<c:out value='${products.price}' />"
                     />
                 </td>
             </tr>
@@ -50,7 +50,7 @@
                 <th>Quantity:</th>
                 <td>
                     <input type="text" name="quantity" size="15"
-                           value="<c:out value='${product.quantity}' />"
+                           value="<c:out value='${products.quantity}' />"
                     />
                 </td>
             </tr>
@@ -58,16 +58,18 @@
                 <th>Color:</th>
                 <td>
                     <input type="text" name="color" size="15"
-                           value="<c:out value='${product.color}' />"
+                           value="<c:out value='${products.color}' />"
                     />
                 </td>
             </tr>
             <tr>
                 <th>Category:</th>
                 <td>
-                    <input type="text" name="category" size="15"
-                           value="<c:out value='${product.category.id}' />"
-                    />
+                    <select name="categories" id="categories">
+                        <c:forEach var="categories" items="${categories}">
+                            <option value="${categories.id}">${categories.name}</option>
+                        </c:forEach>
+                    </select>
                 </td>
             </tr>
             <tr>
